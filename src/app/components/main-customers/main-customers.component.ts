@@ -1,11 +1,12 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CustomerService } from 'src/app/services/customer.service';
 import Swal from 'sweetalert2';
 import { Customer } from '../../models/Customer';
 import { NgbModal , ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ChartComponent } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-main-customers',
@@ -19,7 +20,22 @@ export class MainCustomersComponent implements OnInit {
   show : Boolean = false;
   p: number = 1;
   closeResult='';
-  constructor(private cs:CustomerService,private modalService: NgbModal ,private ac:ActivatedRoute,private router: Router) { }
+  searchText:any;
+  @ViewChild("chart") chart: ChartComponent;
+  public chartOptions;
+
+  public doughnutChartLabels: any[] = [];
+  public doughnutChartData: any = [];
+  public typeData: Array<Customer> = [];
+
+  nbClientOrdinaire:number=0;
+  nbClientFidele:number=0;
+  nbClientPremium:number=0;
+
+  constructor(private cs:CustomerService,private modalService: NgbModal ,private ac:ActivatedRoute,private router: Router) 
+  {
+   
+  }
 
 
 
@@ -27,13 +43,57 @@ export class MainCustomersComponent implements OnInit {
     this.cs.getAllCustomersFromDB().subscribe(res=> {this.list = res,
       this.listInitial=this.list;
      console.log(this.list);
-     for(let k in this.list){
-      console.log("client "+k+" : "+this.list[k].idClient);}
-      })
-      
-      
-   
+    })
+
+
+
+    this.cs.getNumberCustomerFidele().subscribe(res=> {this.nbClientFidele = res
+      console.log("client fidele "+this.nbClientFidele);
+
+  this.cs.getNumberCustomerOrdinaire().subscribe(res=> {this.nbClientOrdinaire = res,
+        console.log("client nbClientOrdinaire "+this.nbClientOrdinaire);
+
+       this.cs.getNumberCustomerPremium().subscribe(res=> {this.nbClientPremium = res,
+        console.log("client nbClientPremium "+this.nbClientPremium);
+       
+          //charts
+          
+     this.chartOptions = {
+      series: [this.nbClientFidele,this.nbClientOrdinaire,this.nbClientPremium],
+      chart: {
+        width: 380,
+        type: "pie"
+      },
+      labels: ["Fidele", "Ordinaire", "Premium"],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };  }) }) })
+    
+
   }
+
+getCatOrdinaire()
+{
+  for(let k in this.list){
+    if(this.list[k].categorieClient=="ORDINARE")
+    {
+      this.nbClientOrdinaire+=1;
+    }
+    console.log("nbClientOrdinaire = "+this.nbClientOrdinaire);
+  }
+}
+
 
   getCustomerByCategory(cat:string){
     this.cs.getCustomerByCategory(cat).subscribe(res=> {this.list = res,

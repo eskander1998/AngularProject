@@ -1,4 +1,5 @@
 import { Facture } from "./Facture";
+import { Produit } from "./produit";
 
 export class DetailFacture {
     idDetailFacture: number;
@@ -6,6 +7,6 @@ export class DetailFacture {
     prixTotal: number;
     pourcentageRemise: number;
     montantRemise: number;
-    //produit: Produit;
+    produit: Produit;
     facture: Facture;
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/Customer';
 import { Facture } from '../models/Facture';
+import { Produit } from '../models/produit';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,33 @@ export class CustomerService {
 
   constructor(private _http:HttpClient) { }
 
+  
+  getNumberCustomerOrdinaire()
+  {
+    return this._http.get<number>(this.CustomersUrl+"/client-fidele");
+  }
+  getNumberCustomerPremium ()
+  {
+    return this._http.get<number>(this.CustomersUrl+"/client-premium");
+  }
+  getNumberCustomerFidele()
+  {
+    return this._http.get<number>(this.CustomersUrl+"/client-ordinaire");
+  }
 
-  getAllCustomersFromDB():Observable<Customer[]>{
+  getPurchaseHistoryByClient(idClient:string,idfacture:string):Observable<Produit[]>{
+    return this._http.get<Produit[]>(this.CustomersUrl+"/Produit-by-client/"+idClient+"/"+idfacture);
+  }
+
+    getAllCustomersFromDB():Observable<Customer[]>{
     return this._http.get<Customer[]>(this.CustomersUrl+"/retrieve-all-clients");
   }
+
+  getStatClient():Observable<Customer[]>{
+    return this._http.get<Customer[]>(this.CustomersUrl+"/stat-client");
+  }
+
+
   getCustomerByCategory(categorie:string):Observable<Customer[]>{
     return this._http.get<Customer[]>(this.CustomersUrl+"/retrieve-client-byCategorieClient/"+categorie);
   }

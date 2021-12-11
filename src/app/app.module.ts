@@ -24,6 +24,11 @@ import { UpdateFormComponent } from './components/main-customers/update-form/upd
 import {NgxPaginationModule} from 'ngx-pagination';
 import Swal from 'sweetalert2';
 import { DetailClientComponent } from './components/main-customers/detail-client/detail-client.component'
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { NgChartsModule } from 'ng2-charts';
+import { ProduitAcheteParClientComponent } from './components/main-customers/produit-achete-par-client/produit-achete-par-client.component';
 
 
 @NgModule({
@@ -41,7 +46,8 @@ import { DetailClientComponent } from './components/main-customers/detail-client
     MainInvoicesComponent,
     CustomersFormComponent,
     UpdateFormComponent,
-    DetailClientComponent
+    DetailClientComponent,
+    ProduitAcheteParClientComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +58,11 @@ import { DetailClientComponent } from './components/main-customers/detail-client
     ReactiveFormsModule,
     HttpClientModule,
     FontAwesomeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    NgApexchartsModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

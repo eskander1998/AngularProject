@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer } from 'src/app/models/Customer';
 import { Facture } from 'src/app/models/Facture';
+import { Produit } from 'src/app/models/produit';
 import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
@@ -17,6 +18,11 @@ export class DetailClientComponent implements OnInit {
   nom="a";
   total=0;
   idClient:string;
+  show : Boolean = false;
+  MyProduit:Produit;
+  IdClient :string;
+  IdFacture :string;
+
   constructor(private cs:CustomerService,private ac:ActivatedRoute,private router: Router) { }
 
   ngOnInit(): void {
@@ -42,6 +48,12 @@ export class DetailClientComponent implements OnInit {
     
   }
 
+  ShowListProduit(idFac:number,i:number)
+  {
+    this.show=!this.show;
+   this.IdClient= this.list[0].client.idClient.toString();
+   this.IdFacture=idFac.toString();
+  }
 
 
 }

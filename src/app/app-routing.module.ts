@@ -11,12 +11,14 @@ import { MainInvoicesComponent } from './components/main-invoices/main-invoices.
 import { CustomersFormComponent } from './components/main-customers/customers-form/customers-form.component';
 import { UpdateFormComponent } from './components/main-customers/update-form/update-form.component';
 import { DetailClientComponent } from './components/main-customers/detail-client/detail-client.component';
+import { ProduitAcheteParClientComponent } from './components/main-customers/produit-achete-par-client/produit-achete-par-client.component';
 
 const routes: Routes = [
   {path: '', component: MainPageComponent, children: [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'customers', component: MainCustomersComponent },
     {path: 'customers/:idclient', component: DetailClientComponent },
+    {path: 'ProduitByClient/:idclient/:idFacture', component: ProduitAcheteParClientComponent },
     {path: 'addcustomer', component: CustomersFormComponent},
     {path: 'updatecustomer"', component: UpdateFormComponent},
     {path: 'products', component: MainProductsComponent},
